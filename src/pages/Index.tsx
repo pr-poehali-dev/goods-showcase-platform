@@ -12,17 +12,18 @@ interface Product {
   badge?: "hot" | "new";
   category: string;
   emoji: string;
+  image?: string;
 }
 
 const PRODUCTS: Product[] = [
-  { id: 1, name: "Смарт-часы Nova X", description: "Умные часы с AMOLED экраном, мониторингом здоровья и 7 днями автономной работы", price: 12900, oldPrice: 16900, badge: "hot", category: "Электроника", emoji: "⌚" },
-  { id: 2, name: "Наушники Air Pro", description: "Беспроводные наушники с активным шумоподавлением и Hi-Fi звуком 24 бит", price: 8490, badge: "new", category: "Электроника", emoji: "🎧" },
-  { id: 3, name: "Рюкзак Urban Drift", description: "Городской рюкзак из водонепроницаемой ткани с USB-портом и отделением для ноутбука", price: 4990, oldPrice: 6500, category: "Аксессуары", emoji: "🎒" },
-  { id: 4, name: "Лампа Ambient Glow", description: "Умная RGB лампа с 16 млн оттенков, управлением со смартфона и режимами освещения", price: 2990, badge: "new", category: "Дом", emoji: "💡" },
-  { id: 5, name: "Кроссовки FlexRun", description: "Лёгкие кроссовки с технологией амортизации и дышащей мембраной для городского бега", price: 9800, oldPrice: 12000, badge: "hot", category: "Обувь", emoji: "👟" },
-  { id: 6, name: "Термокружка MagKeep", description: "Термокружка из нержавеющей стали, удерживает температуру 24 часа, крышка-непроливайка", price: 1890, category: "Дом", emoji: "☕" },
-  { id: 7, name: "Клавиатура Mech RGB", description: "Механическая клавиатура с RGB подсветкой, тихими переключателями и алюминиевым корпусом", price: 7200, badge: "new", category: "Электроника", emoji: "⌨️" },
-  { id: 8, name: "Сумка Leather Edit", description: "Кожаная сумка ручной работы с отделением для документов и съёмным плечевым ремнём", price: 5600, category: "Аксессуары", emoji: "👜" },
+  { id: 1, name: "Смарт-часы Nova X", description: "Умные часы с AMOLED экраном, мониторингом здоровья и 7 днями автономной работы", price: 12900, oldPrice: 16900, badge: "hot", category: "Электроника", emoji: "⌚", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/89ed97b9-6b6b-4fb6-8479-a1172104c54d.jpg" },
+  { id: 2, name: "Наушники Air Pro", description: "Беспроводные наушники с активным шумоподавлением и Hi-Fi звуком 24 бит", price: 8490, badge: "new", category: "Электроника", emoji: "🎧", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/77712b2f-b09a-412f-ac03-9805065e9320.jpg" },
+  { id: 3, name: "Рюкзак Urban Drift", description: "Городской рюкзак из водонепроницаемой ткани с USB-портом и отделением для ноутбука", price: 4990, oldPrice: 6500, category: "Аксессуары", emoji: "🎒", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/7c18050d-4b0a-4b7b-88f0-213e0b69ccaa.jpg" },
+  { id: 4, name: "Лампа Ambient Glow", description: "Умная RGB лампа с 16 млн оттенков, управлением со смартфона и режимами освещения", price: 2990, badge: "new", category: "Дом", emoji: "💡", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/9c63f169-80a8-4313-af7e-3aefc784d556.jpg" },
+  { id: 5, name: "Кроссовки FlexRun", description: "Лёгкие кроссовки с технологией амортизации и дышащей мембраной для городского бега", price: 9800, oldPrice: 12000, badge: "hot", category: "Обувь", emoji: "👟", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/f1ae1c4d-d26e-473b-a12c-66b6c6f5909f.jpg" },
+  { id: 6, name: "Термокружка MagKeep", description: "Термокружка из нержавеющей стали, удерживает температуру 24 часа, крышка-непроливайка", price: 1890, category: "Дом", emoji: "☕", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/71563e46-da5d-4809-8b0e-4e8e1f296644.jpg" },
+  { id: 7, name: "Клавиатура Mech RGB", description: "Механическая клавиатура с RGB подсветкой, тихими переключателями и алюминиевым корпусом", price: 7200, badge: "new", category: "Электроника", emoji: "⌨️", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/81878b2b-248a-414d-adfa-f9eca3acb884.jpg" },
+  { id: 8, name: "Сумка Leather Edit", description: "Кожаная сумка ручной работы с отделением для документов и съёмным плечевым ремнём", price: 5600, category: "Аксессуары", emoji: "👜", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/4c202f3c-145b-45f0-8846-04e5b0914879.jpg" },
 ];
 
 const CATEGORIES = ["Все", "Электроника", "Аксессуары", "Дом", "Обувь"];
@@ -323,8 +324,12 @@ export default function Index() {
                 <div className="md:col-span-2 space-y-4">
                   {cart.map((item) => (
                     <div key={item.product.id} className="card-glass rounded-2xl p-4 border border-white/8 flex items-center gap-4">
-                      <div className="w-16 h-16 rounded-xl gradient-bg-subtle flex items-center justify-center text-3xl border border-white/10 shrink-0">
-                        {item.product.emoji}
+                      <div className="w-16 h-16 rounded-xl overflow-hidden border border-white/10 shrink-0">
+                        {item.product.image ? (
+                          <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full gradient-bg-subtle flex items-center justify-center text-2xl">{item.product.emoji}</div>
+                        )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-display font-semibold text-sm truncate">{item.product.name}</div>
@@ -457,13 +462,23 @@ export default function Index() {
 function ProductCard({ product, onAdd }: { product: Product; onAdd: (p: Product) => void }) {
   return (
     <div className="card-glass card-hover rounded-2xl border border-white/8 overflow-hidden group">
-      <div className="aspect-square gradient-bg-subtle flex items-center justify-center text-5xl border-b border-white/5 relative">
+      <div className="aspect-square relative overflow-hidden border-b border-white/5">
+        {product.image ? (
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <div className="w-full h-full gradient-bg-subtle flex items-center justify-center text-5xl">
+            <span className="group-hover:scale-110 transition-transform duration-300 inline-block">{product.emoji}</span>
+          </div>
+        )}
         {product.badge && (
           <span className={`absolute top-3 left-3 ${product.badge === "hot" ? "badge-hot" : "badge-new"}`}>
             {product.badge === "hot" ? "Хит" : "Новинка"}
           </span>
         )}
-        <span className="group-hover:scale-110 transition-transform duration-300 inline-block">{product.emoji}</span>
       </div>
       <div className="p-4">
         <div className="text-[10px] text-white/35 font-body mb-1 uppercase tracking-wide">{product.category}</div>
