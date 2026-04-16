@@ -5,9 +5,20 @@ import os
 import json
 import uuid
 import base64
+from datetime import datetime, date
 import psycopg2
 import boto3
 from psycopg2.extras import RealDictCursor
+
+
+def serialize(obj):
+    if isinstance(obj, (datetime, date)):
+        return obj.isoformat()
+    raise TypeError(f"Type {type(obj)} not serializable")
+
+
+def dumps(data):
+    return json.dumps(data, default=serialize)
 
 SCHEMA = os.environ.get("MAIN_DB_SCHEMA", "public")
 CORS = {
@@ -46,7 +57,7 @@ def handler(event: dict, context) -> dict:
         return {
             "statusCode": 200,
             "headers": {**CORS, "Content-Type": "application/json"},
-            "body": json.dumps({"products": [dict(r) for r in rows]}),
+            "body": dumps({"products": [dict(r) for r in rows]}),
         }
 
     # GET /products/all — все включая неактивные (для админки)
@@ -59,7 +70,7 @@ def handler(event: dict, context) -> dict:
         return {
             "statusCode": 200,
             "headers": {**CORS, "Content-Type": "application/json"},
-            "body": json.dumps({"products": [dict(r) for r in rows]}),
+            "body": dumps({"products": [dict(r) for r in rows]}),
         }
 
     # POST /products — создать товар
@@ -89,7 +100,7 @@ def handler(event: dict, context) -> dict:
         return {
             "statusCode": 201,
             "headers": {**CORS, "Content-Type": "application/json"},
-            "body": json.dumps({"product": row}),
+            "body": dumps({"product": row}),
         }
 
     # PUT /products — обновить товар
@@ -123,7 +134,7 @@ def handler(event: dict, context) -> dict:
         return {
             "statusCode": 200,
             "headers": {**CORS, "Content-Type": "application/json"},
-            "body": json.dumps({"product": dict(row)}),
+            "body": dumps({"product": dict(row)}),
         }
 
     # DELETE /products — удалить товар
