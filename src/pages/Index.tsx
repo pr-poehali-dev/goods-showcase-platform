@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Icon from "@/components/ui/icon";
 
 type Page = "home" | "catalog" | "cart" | "contacts";
@@ -11,11 +11,15 @@ interface Product {
   oldPrice?: number;
   badge?: "hot" | "new";
   category: string;
-  emoji: string;
+  emoji?: string;
+  image_url?: string | null;
   image?: string;
+  old_price?: number | null;
+  badge?: string | null;
+  is_active?: boolean;
 }
 
-const PRODUCTS: Product[] = [
+const STATIC_PRODUCTS: Product[] = [
   { id: 1, name: "Смарт-часы Nova X", description: "Умные часы с AMOLED экраном, мониторингом здоровья и 7 днями автономной работы", price: 12900, oldPrice: 16900, badge: "hot", category: "Электроника", emoji: "⌚", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/89ed97b9-6b6b-4fb6-8479-a1172104c54d.jpg" },
   { id: 2, name: "Наушники Air Pro", description: "Беспроводные наушники с активным шумоподавлением и Hi-Fi звуком 24 бит", price: 8490, badge: "new", category: "Электроника", emoji: "🎧", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/77712b2f-b09a-412f-ac03-9805065e9320.jpg" },
   { id: 3, name: "Рюкзак Urban Drift", description: "Городской рюкзак из водонепроницаемой ткани с USB-портом и отделением для ноутбука", price: 4990, oldPrice: 6500, category: "Аксессуары", emoji: "🎒", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/7c18050d-4b0a-4b7b-88f0-213e0b69ccaa.jpg" },
@@ -26,7 +30,8 @@ const PRODUCTS: Product[] = [
   { id: 8, name: "Сумка Leather Edit", description: "Кожаная сумка ручной работы с отделением для документов и съёмным плечевым ремнём", price: 5600, category: "Аксессуары", emoji: "👜", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/4c202f3c-145b-45f0-8846-04e5b0914879.jpg" },
 ];
 
-const CATEGORIES = ["Все", "Электроника", "Аксессуары", "Дом", "Обувь"];
+const CATEGORIES = ["Все", "Электроника", "Аксессуары", "Дом", "Обувь", "Другое"];
+const API = "https://functions.poehali.dev/4b307dc4-c917-4396-a915-36d6e40b4d2e";
 
 const HERO_IMG = "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/b66a8b4c-dc69-41cc-b407-f306235b660a.jpg";
 
@@ -36,12 +41,26 @@ export default function Index() {
   const [cart, setCart] = useState<{ product: Product; qty: number }[]>([]);
   const [activeCategory, setActiveCategory] = useState("Все");
   const [searchFocused, setSearchFocused] = useState(false);
+  const [dbProducts, setDbProducts] = useState<Product[]>([]);
+  const [dbLoaded, setDbLoaded] = useState(false);
+
+  useEffect(() => {
+    fetch(API)
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.products && d.products.length > 0) setDbProducts(d.products);
+        setDbLoaded(true);
+      })
+      .catch(() => setDbLoaded(true));
+  }, []);
+
+  const allProducts = dbLoaded && dbProducts.length > 0 ? dbProducts : STATIC_PRODUCTS;
 
   const cartCount = cart.reduce((sum, i) => sum + i.qty, 0);
   const cartTotal = cart.reduce((sum, i) => sum + i.product.price * i.qty, 0);
 
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter((p) => {
+    return allProducts.filter((p) => {
       const matchesSearch =
         search.trim() === "" ||
         p.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -50,7 +69,7 @@ export default function Index() {
         activeCategory === "Все" || p.category === activeCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [search, activeCategory]);
+  }, [search, activeCategory, allProducts]);
 
   function addToCart(product: Product) {
     setCart((prev) => {
@@ -238,7 +257,7 @@ export default function Index() {
                 </button>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {PRODUCTS.filter((p) => p.badge).map((product) => (
+                {allProducts.filter((p) => p.badge).map((product) => (
                   <ProductCard key={product.id} product={product} onAdd={addToCart} />
                 ))}
               </div>
@@ -463,15 +482,15 @@ function ProductCard({ product, onAdd }: { product: Product; onAdd: (p: Product)
   return (
     <div className="card-glass card-hover rounded-2xl border border-white/8 overflow-hidden group">
       <div className="aspect-square relative overflow-hidden border-b border-white/5">
-        {product.image ? (
+        {(product.image_url || product.image) ? (
           <img
-            src={product.image}
+            src={(product.image_url || product.image)!}
             alt={product.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
           <div className="w-full h-full gradient-bg-subtle flex items-center justify-center text-5xl">
-            <span className="group-hover:scale-110 transition-transform duration-300 inline-block">{product.emoji}</span>
+            <span className="group-hover:scale-110 transition-transform duration-300 inline-block">{product.emoji ?? "📦"}</span>
           </div>
         )}
         {product.badge && (
@@ -487,8 +506,8 @@ function ProductCard({ product, onAdd }: { product: Product; onAdd: (p: Product)
         <div className="flex items-end justify-between">
           <div>
             <div className="font-display font-bold text-lg gradient-text">{product.price.toLocaleString()} ₽</div>
-            {product.oldPrice && (
-              <div className="text-white/30 text-xs line-through font-body">{product.oldPrice.toLocaleString()} ₽</div>
+            {(product.old_price || product.oldPrice) && (
+              <div className="text-white/30 text-xs line-through font-body">{(product.old_price || product.oldPrice)!.toLocaleString()} ₽</div>
             )}
           </div>
           <button
