@@ -3,6 +3,8 @@ import Icon from "@/components/ui/icon";
 
 const API = "https://functions.poehali.dev/4b307dc4-c917-4396-a915-36d6e40b4d2e";
 const CATEGORIES = ["Электроника", "Аксессуары", "Дом", "Обувь", "Другое"];
+const ADMIN_PASSWORD = "143414";
+const AUTH_KEY = "nova_admin_auth";
 
 interface Product {
   id?: number;
@@ -30,6 +32,10 @@ const EMPTY: Product = {
 };
 
 export default function Admin() {
+  const [authed, setAuthed] = useState(() => sessionStorage.getItem(AUTH_KEY) === "1");
+  const [pwInput, setPwInput] = useState("");
+  const [pwError, setPwError] = useState(false);
+
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<Product | null>(null);
@@ -37,6 +43,17 @@ export default function Admin() {
   const [uploading, setUploading] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  function handleLogin() {
+    if (pwInput === ADMIN_PASSWORD) {
+      sessionStorage.setItem(AUTH_KEY, "1");
+      setAuthed(true);
+      setPwError(false);
+    } else {
+      setPwError(true);
+      setPwInput("");
+    }
+  }
 
   async function load() {
     setLoading(true);
@@ -89,6 +106,50 @@ export default function Admin() {
       setUploading(false);
     };
     reader.readAsDataURL(file);
+  }
+
+  if (!authed) {
+    return (
+      <div className="min-h-screen bg-[#080810] text-white flex items-center justify-center p-4">
+        <div
+          className="fixed top-[-200px] left-[-200px] w-[500px] h-[500px] rounded-full opacity-20 pointer-events-none"
+          style={{ background: "radial-gradient(circle, #7C3AED, transparent 70%)", zIndex: 0 }}
+        />
+        <div className="card-glass border border-white/10 rounded-3xl p-8 w-full max-w-sm relative z-10">
+          <div className="text-center mb-8">
+            <div className="w-14 h-14 gradient-bg rounded-2xl flex items-center justify-center text-2xl font-bold font-display mx-auto mb-4">N</div>
+            <h1 className="font-display text-2xl font-bold">Вход в админку</h1>
+            <p className="text-white/40 font-body text-sm mt-1">Введите пароль для доступа</p>
+          </div>
+          <div className="space-y-4">
+            <div className="relative">
+              <Icon name="Lock" size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
+              <input
+                type="password"
+                value={pwInput}
+                onChange={(e) => { setPwInput(e.target.value); setPwError(false); }}
+                onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+                placeholder="Пароль"
+                className={`w-full pl-11 pr-4 py-3 rounded-xl font-body text-sm text-white placeholder-white/25 outline-none border transition-colors ${
+                  pwError ? "border-red-500/60 bg-red-500/5" : "border-white/10 focus:border-purple-500/50"
+                }`}
+                style={pwError ? {} : { background: "rgba(255,255,255,0.04)" }}
+                autoFocus
+              />
+            </div>
+            {pwError && (
+              <p className="text-red-400 text-xs font-body text-center animate-fade-in">Неверный пароль</p>
+            )}
+            <button
+              onClick={handleLogin}
+              className="btn-primary w-full py-3 rounded-xl font-body text-sm font-semibold"
+            >
+              Войти
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
