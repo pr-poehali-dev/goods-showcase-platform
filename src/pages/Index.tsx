@@ -19,16 +19,7 @@ interface Product {
   is_active?: boolean;
 }
 
-const STATIC_PRODUCTS: Product[] = [
-  { id: 1, name: "Смарт-часы Nova X", description: "Умные часы с AMOLED экраном, мониторингом здоровья и 7 днями автономной работы", price: 12900, oldPrice: 16900, badge: "hot", category: "Электроника", emoji: "⌚", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/89ed97b9-6b6b-4fb6-8479-a1172104c54d.jpg" },
-  { id: 2, name: "Наушники Air Pro", description: "Беспроводные наушники с активным шумоподавлением и Hi-Fi звуком 24 бит", price: 8490, badge: "new", category: "Электроника", emoji: "🎧", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/77712b2f-b09a-412f-ac03-9805065e9320.jpg" },
-  { id: 3, name: "Рюкзак Urban Drift", description: "Городской рюкзак из водонепроницаемой ткани с USB-портом и отделением для ноутбука", price: 4990, oldPrice: 6500, category: "Аксессуары", emoji: "🎒", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/7c18050d-4b0a-4b7b-88f0-213e0b69ccaa.jpg" },
-  { id: 4, name: "Лампа Ambient Glow", description: "Умная RGB лампа с 16 млн оттенков, управлением со смартфона и режимами освещения", price: 2990, badge: "new", category: "Дом", emoji: "💡", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/9c63f169-80a8-4313-af7e-3aefc784d556.jpg" },
-  { id: 5, name: "Кроссовки FlexRun", description: "Лёгкие кроссовки с технологией амортизации и дышащей мембраной для городского бега", price: 9800, oldPrice: 12000, badge: "hot", category: "Обувь", emoji: "👟", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/f1ae1c4d-d26e-473b-a12c-66b6c6f5909f.jpg" },
-  { id: 6, name: "Термокружка MagKeep", description: "Термокружка из нержавеющей стали, удерживает температуру 24 часа, крышка-непроливайка", price: 1890, category: "Дом", emoji: "☕", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/71563e46-da5d-4809-8b0e-4e8e1f296644.jpg" },
-  { id: 7, name: "Клавиатура Mech RGB", description: "Механическая клавиатура с RGB подсветкой, тихими переключателями и алюминиевым корпусом", price: 7200, badge: "new", category: "Электроника", emoji: "⌨️", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/81878b2b-248a-414d-adfa-f9eca3acb884.jpg" },
-  { id: 8, name: "Сумка Leather Edit", description: "Кожаная сумка ручной работы с отделением для документов и съёмным плечевым ремнём", price: 5600, category: "Аксессуары", emoji: "👜", image: "https://cdn.poehali.dev/projects/fb00ab1f-e88b-4e54-b75e-fb3bb24680f6/files/4c202f3c-145b-45f0-8846-04e5b0914879.jpg" },
-];
+
 
 const CATEGORIES = ["Все", "Электроника", "Аксессуары", "Дом", "Обувь", "Другое"];
 const API = "https://functions.poehali.dev/4b307dc4-c917-4396-a915-36d6e40b4d2e";
@@ -54,7 +45,7 @@ export default function Index() {
       .catch(() => setDbLoaded(true));
   }, []);
 
-  const allProducts = dbLoaded && dbProducts.length > 0 ? dbProducts : STATIC_PRODUCTS;
+  const allProducts = dbProducts;
 
   const cartCount = cart.reduce((sum, i) => sum + i.qty, 0);
   const cartTotal = cart.reduce((sum, i) => sum + i.product.price * i.qty, 0);
