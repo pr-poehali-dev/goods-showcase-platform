@@ -34,12 +34,7 @@ export default function HomePage({ allProducts, setPage, addToCart }: Props) {
               >
                 Смотреть каталог
               </button>
-              <button
-                onClick={() => setPage("contacts")}
-                className="px-6 py-3 rounded-xl font-semibold text-sm font-body border border-white/15 text-white/70 hover:border-white/30 hover:text-white transition-all"
-              >
-                Связаться
-              </button>
+
             </div>
           </div>
           <div className="relative">
@@ -59,28 +54,6 @@ export default function HomePage({ allProducts, setPage, addToCart }: Props) {
               <div className="font-display text-2xl font-bold gradient-text">12K</div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            { icon: "Truck", title: "Быстрая доставка", desc: "Доставим за 1-2 дня по всей России", color: "#7C3AED" },
-            { icon: "Shield", title: "Гарантия качества", desc: "Официальная гарантия от 1 года на все товары", color: "#2563EB" },
-            { icon: "RefreshCw", title: "Лёгкий возврат", desc: "30 дней на возврат без вопросов", color: "#06B6D4" },
-          ].map((f) => (
-            <div key={f.title} className="card-glass card-hover rounded-2xl p-6 border border-white/8">
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                style={{ background: `${f.color}22`, border: `1px solid ${f.color}44` }}
-              >
-                <Icon name={f.icon} size={22} style={{ color: f.color }} />
-              </div>
-              <h3 className="font-display text-lg font-semibold mb-2">{f.title}</h3>
-              <p className="text-white/50 text-sm font-body leading-relaxed">{f.desc}</p>
-            </div>
-          ))}
         </div>
       </section>
 

@@ -84,10 +84,10 @@ export default function Index() {
       <footer className="border-t border-white/8 mt-20 py-8">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg gradient-bg flex items-center justify-center text-sm font-bold font-display">N</div>
-            <span className="font-display font-bold gradient-text">NОВА</span>
+            <div className="w-7 h-7 rounded-lg gradient-bg flex items-center justify-center text-sm font-bold font-display">I</div>
+            <span className="font-display font-bold gradient-text">Ilyashop</span>
           </div>
-          <p className="text-white/25 text-xs font-body">© 2026 NОВА. Все права защищены.</p>
+          <p className="text-white/25 text-xs font-body">© 2026 Ilyashop. Все права защищены.</p>
           <div className="flex gap-4 text-xs text-white/30 font-body">
             <span className="hover:text-white/60 cursor-pointer transition-colors">Политика конфиденциальности</span>
             <span className="hover:text-white/60 cursor-pointer transition-colors">Условия использования</span>

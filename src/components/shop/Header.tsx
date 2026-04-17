@@ -11,7 +11,6 @@ const navItems: { id: Page; label: string; icon: string }[] = [
   { id: "home", label: "Главная", icon: "Home" },
   { id: "catalog", label: "Каталог", icon: "Grid3X3" },
   { id: "cart", label: "Корзина", icon: "ShoppingCart" },
-  { id: "contacts", label: "Контакты", icon: "Phone" },
 ];
 
 export default function Header({ page, setPage, cartCount }: Props) {
@@ -19,8 +18,8 @@ export default function Header({ page, setPage, cartCount }: Props) {
     <header className="sticky top-0 z-50 border-b border-white/8" style={{ background: "rgba(8,8,16,0.85)", backdropFilter: "blur(20px)" }}>
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         <button onClick={() => setPage("home")} className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-lg gradient-bg flex items-center justify-center text-sm font-bold font-display">N</div>
-          <span className="font-display text-xl font-bold tracking-wide gradient-text">NОВА</span>
+          <div className="w-8 h-8 rounded-lg gradient-bg flex items-center justify-center text-sm font-bold font-display">I</div>
+          <span className="font-display text-xl font-bold tracking-wide gradient-text">Ilyashop</span>
         </button>
 
         <nav className="hidden md:flex items-center gap-1">
